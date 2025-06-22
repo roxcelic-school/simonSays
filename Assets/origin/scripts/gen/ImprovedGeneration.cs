@@ -56,6 +56,7 @@ public class ImprovedGeneration : MonoBehaviour {
         public static List<GameObject> Enemys;
     }
 
+    public GameObject enemySpawnering;
     public GameObject gate;
 
     [Header("player")]
@@ -195,6 +196,7 @@ public class ImprovedGeneration : MonoBehaviour {
         // spawn floor
         roomConfig.floor = SpawnObject(floors, 1, new Vector3(90f, 0f, 0f), new Vector3(), "floor");
         roomConfig.enemys = SpawnSingleObject(EnemySpawner, 1, new Vector3(0f, 0f, 0f), new Vector3(), "enemys");
+        enemySpawnering = roomConfig.enemys;
 
         // spawn walls
             if (!experement){

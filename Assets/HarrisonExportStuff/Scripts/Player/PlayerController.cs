@@ -67,6 +67,26 @@ public class PlayerControllerH : MonoBehaviour
         playerstate = PlayerState.Neutral;
         ChangeState();//setting player to neutral
         lastdash = Time.time;
+
+        // powerups
+        string[] powerupsHOLD = PlayerPrefs.GetString("powerups", "").Split(",");
+        foreach (string key in powerups.full.truePowerups().Keys) Debug.Log(key);
+        
+        foreach (string powerup in powerupsHOLD) {
+            try {
+                Debug.Log(powerup);
+
+                if (powerup != ""){
+                    if (powerups.full.truePowerups().ContainsKey(powerup)) {
+                        Debug.Log($"applying {powerup}");
+                        powerups.full.truePowerups()[powerup].action(this);
+                        Debug.Log($"applied {powerup}");
+                    }
+                }
+            } catch (System.Exception e) {
+                Debug.Log($"failed to apply powerup: {powerup}");
+            }
+        }
     }
 
     protected virtual void Update()
@@ -244,6 +264,13 @@ public class PlayerControllerH : MonoBehaviour
 
         // rotation lock, probably very inneficient
         transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+
+
+        // respawn
+        if (transform.position.y <= -15f) {
+            transform.position = new(0, 5f, 0);
+            playertookdamage(10);
+        }
     }
     public void playertookdamage(int dmg)//reduces health by parameter
     {

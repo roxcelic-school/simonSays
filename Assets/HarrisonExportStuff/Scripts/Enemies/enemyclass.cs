@@ -56,6 +56,8 @@ public class enemyclass : MonoBehaviour
         }
         transform.LookAt(new Vector3(playerref.transform.position.x, transform.position.y, playerref.transform.position.z));//looks at player constantly, and then moves to their position. 
     
+
+        if (transform.position.z <= -15f) takedamage(100000, "i dont like this ):");
     }
 
     public void takedamage(int dmg, string damager)
