@@ -83,9 +83,10 @@ MonoBehaviour:
   safeborder: 5
   StartRoom: 0
   EndRoom: 0
+  enemySpawnering: {fileID: 0}
   gate: {fileID: 0}
   player:
-  - {fileID: 2264230043027723613, guid: 407a08484e5ec5a48a41c9297132fb67, type: 3}
+  - {fileID: 2531207252269518093, guid: 6e3ef3f2fe3822d4b8ff5702f4971e9e, type: 3}
   altPlayer:
   - {fileID: 7238305402874162457, guid: 53bfce4764cfc8a429ce4f93819ad255, type: 3}
   - {fileID: 7238305402874162457, guid: eefe4ab2a9b06224d9cda14103a569b0, type: 3}
