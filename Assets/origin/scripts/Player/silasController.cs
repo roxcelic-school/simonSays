@@ -23,8 +23,10 @@ public class silasController : PlayerController {
     public IEnumerator spin() {
         spinning = true;
         base.speed *= 2;
+        base.healModifier *= 3;
         yield return new WaitForSeconds(0.5f);
         base.speed /= 2;
+        base.healModifier /= 3;
         spinning = false;
     }
 

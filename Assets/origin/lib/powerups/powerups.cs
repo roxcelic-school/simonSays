@@ -167,6 +167,14 @@ namespace powerups {
                     Time.timeScale = 0.5f;
                 }
             },
+            ["thorns"] = new powerups.PowerUp{
+                Description = "deals the damage taken to the dealer",
+                action = (This) => {
+                    Base(This);
+                    PlayerController controller = This.GetComponent<PlayerController>();
+                    controller.thorns = true;
+                }
+            },
 
 
             
@@ -188,15 +196,7 @@ namespace powerups {
                     PlayerController controller = This.GetComponent<PlayerController>();
                     controller.speed += 66f;
                 }
-            },
-            ["  "] = new powerups.PowerUp{
-                Description = "+25 max health",
-                action = (This) => {
-                    Base(This);
-                    PlayerController controller = This.GetComponent<PlayerController>();
-                    controller.maxHealth += 25f;
-                }
-            },
+            }
         };
 
         public static Dictionary<string, powerups.PowerUp> fun = new Dictionary<string, powerups.PowerUp> {
@@ -230,6 +230,16 @@ namespace powerups {
                     controller.speed = 1000f;
                     controller.dash = true;
                     controller.canJump = true;
+                }
+            },
+            ["n"] = new powerups.PowerUp{
+                Description = "noclip yayyy",
+                action = (This) => {
+                    Base(This);
+                    PlayerController controller = This.GetComponent<PlayerController>();
+                    controller.noclip = true;
+                    This.GetComponent<Rigidbody>().useGravity = false;
+                    This.GetComponent<Collider>().enabled = false;
                 }
             },
         };

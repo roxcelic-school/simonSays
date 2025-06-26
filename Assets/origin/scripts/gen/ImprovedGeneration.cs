@@ -93,7 +93,6 @@ public class ImprovedGeneration : MonoBehaviour {
         }
     
         // starting
-        if (PlayerPrefs.GetInt("floor", 0) % 5 != 0 || PlayerPrefs.GetInt("floor", 0) == 0)
         StartCoroutine(startGen());
     }
 
@@ -236,6 +235,7 @@ public class ImprovedGeneration : MonoBehaviour {
 
         roomConfig.enemys.SetActive(true);
         roomConfig.enemys.GetComponent<EnemySpawn>().enemys = ListRandom(enemys);
+        roomConfig.enemys.GetComponent<EnemySpawn>().endRoom = EndRoom;
 
         if (StartRoom)
             roomConfig.enemys.GetComponent<EnemySpawn>().Forceactivated = true;

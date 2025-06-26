@@ -9,6 +9,7 @@ public class EnemySpawn : MonoBehaviour {
     public Collider col;
     public bool activated = false;
     public bool Forceactivated = false;
+    public bool endRoom = false;
     public int count = -1;
     public float safeborder = 5f;
 
@@ -41,8 +42,8 @@ public class EnemySpawn : MonoBehaviour {
     public IEnumerator SpawnCreatures() {
         yield return new WaitForSeconds(1);
 
-        foreach (GameObject bean in enemys){
-            GameObject newBean = Instantiate(bean);
+        if (!GameObject.Find("Canvas").transform.Find("powerups").gameObject.activeSelf) foreach (GameObject bean in enemys){
+            GameObject newBean = Instantiate(bean, new Vector3(0, 0, 0), Quaternion.identity);
 
             // add pointer to player
             GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -58,8 +59,23 @@ public class EnemySpawn : MonoBehaviour {
         activated = true;
     }
 
+    void Update() {
+        if (!endRoom || PlayerPrefs.GetString("generated", "false") != "true") return;
+
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, transform.localScale.x / 2);
+
+        foreach (Collider collider in hitColliders){
+            GameObject gameObject = collider.gameObject;
+            if (gameObject.tag == "Player") {
+                Time.timeScale = 1f;
+                GameObject loadingScreen = GameObject.Find("Canvas").transform.Find("powerups").gameObject;
+                loadingScreen.SetActive(true);
+            }
+        }
+    }
+
     public IEnumerator waitforallenemystodie() {
-        yield return new WaitUntil(() => (GameObject.FindGameObjectsWithTag("enemy").Length == 0 && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)&& activated);
+        yield return new WaitUntil(() => ((GameObject.FindGameObjectsWithTag("enemy").Length == 0 && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)&& activated));
 
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 

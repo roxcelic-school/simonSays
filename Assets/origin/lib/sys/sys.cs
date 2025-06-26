@@ -6,6 +6,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace sys {
+    public enum damageTypes {
+        Void,
+        Base
+    }
+
     public class data {
         // commands
             public static Dictionary<string, eevee.config> config = new Dictionary<string, eevee.config>() {
@@ -224,6 +229,27 @@ namespace sys {
                         displayName = "lastCommand",
                         KEYBOARD_code = (int)KeyCode.DownArrow,
                         CONTROLLER_name = "Left Stick Down"
+                    }
+                }, // noclip controls
+                {
+                    "noClipUp", new eevee.config {
+                        displayName = "noClipUp",
+                        KEYBOARD_code = (int)KeyCode.Space,
+                        CONTROLLER_name = ""
+                    }
+                },
+                {
+                    "noClipDown", new eevee.config {
+                        displayName = "noClipDown",
+                        KEYBOARD_code = (int)KeyCode.LeftControl,
+                        CONTROLLER_name = ""
+                    }
+                },
+                {
+                    "noClipSpeed", new eevee.config {
+                        displayName = "noClipSpeed",
+                        KEYBOARD_code = (int)KeyCode.LeftShift,
+                        CONTROLLER_name = ""
                     }
                 }
             };

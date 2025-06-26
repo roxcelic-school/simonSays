@@ -1,7 +1,12 @@
 using UnityEngine;
 
 public class attackrest : MonoBehaviour {
-    public string eviltag;
+    public tags eviltag;
+    public enum tags {
+        Player,
+        enemy
+    }
+
     public float damage = 1;
     public nockbackTest nock;
 
@@ -18,19 +23,19 @@ public class attackrest : MonoBehaviour {
 
         foreach (Collider collider in hitColliders){
             GameObject gameObject = collider.gameObject;
-            if (gameObject.tag == eviltag)
+            if (gameObject.tag == eviltag.ToString())
                 DealDamage(gameObject);
         }
     }
 
     void DealDamage(GameObject target){
         switch (eviltag) {
-            case "Player":
-                target.GetComponent<PlayerController>().Damage(damage);
+            case tags.Player:
+                target.GetComponent<PlayerController>().Damage(damage, sys.damageTypes.Base, transform.parent.GetComponent<MainMenace>());
                 nock.DamageDone = true;
                 
                 break;
-            case "enemy":
+            case tags.enemy:
                 target.GetComponent<MainMenace>().Damage(damage);
                 transform.parent.GetComponent<PlayerController>().Heal(damage);
                 nock.DamageDone = true;

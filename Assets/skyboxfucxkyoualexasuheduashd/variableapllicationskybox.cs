@@ -5,7 +5,7 @@ public class variableapllicationskybox : MonoBehaviour {
     public int defaultValue = 10;
     
     void Start() {
-        Debug.Log("hii");
         targetRenderer.material.SetFloat("_speed", PlayerPrefs.GetInt("skyboxspeed", defaultValue) == 0 ? 0.5f : PlayerPrefs.GetInt("skyboxspeed", defaultValue));
+        targetRenderer.material.SetFloat("_room", PlayerPrefs.GetInt("floor", defaultValue));
     }
 }

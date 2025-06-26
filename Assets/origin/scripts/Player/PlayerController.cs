@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour {
     public Rigidbody rb;
     public GameObject attackComp;
     public Animator anim;
+    public GameObject GroundPound;
     public TMP_InputField commandBar;
     public GameObject commandHolder;
     public GameObject pauseMenu;
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour {
     [Header("attack")]
     public bool hit;
     public bool attackPierce;
+    public bool canPound = true;
 
     public float BaseAttackStaminaMax;
     public float BaseAttackRecoveryRate;
@@ -88,6 +90,12 @@ public class PlayerController : MonoBehaviour {
 
     // auto attack
     public bool autoAttack = false;
+
+    // noclip
+    public bool noclip = false;
+
+    // thorns
+    public bool thorns = false;
 
     // cashs
         // movement smoothing
@@ -164,14 +172,19 @@ public class PlayerController : MonoBehaviour {
         // apply movement
         if (CanMove)
             ApplyMovement();
-        
+
         if (eevee.input.Collect("attack") || autoAttack)
             Attack();
         
         // ground pound
-        if (eevee.input.Grab("ground-pound")) {
+        if (eevee.input.Grab("ground-pound") && !noclip && canPound && !isTouchingFloor()) {
             rb.linearVelocity -= new Vector3(0, groundPoundGravity, 0);
-        }
+            GroundPound.SetActive(true);
+            canPound = false;
+            StartCoroutine(GroundPounding());
+        } else if (!eevee.input.Grab("ground-pound") && GroundPound.activeSelf && canPound) {
+            GroundPound.SetActive(false);
+        } 
 
         // jump
         if (eevee.input.Grab("jump") && jumps >= 1 && canJump) {
@@ -220,20 +233,44 @@ public class PlayerController : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("floor"))
-            jumps = maxJumps;
+        if (collision.gameObject.CompareTag("floor")) {
+            jumps = maxJumps;        
+        }
+    }
+
+    bool isTouchingFloor() {
+        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, transform.localScale.x / 4);
+
+        foreach (Collider collider in hitColliders){
+            GameObject gameObject = collider.gameObject;
+            Debug.Log(gameObject);
+            if (gameObject.tag == "floor")
+                return true;
+        }
+
+        return false;
     }
 
     void ApplyMovement() {
         float tmpspeed = 1 + (speed / 50);
+        float vForce = 0f;
+
+
+        if (noclip) vForce = eevee.input.CheckAxis("noClipUp", "noClipDown");
+        if (eevee.input.Check("noClipSpeed") && noclip) vForce *= 2;
+
         if(tmpspeed <= 0) tmpspeed = Mathf.Clamp(Mathf.Abs(tmpspeed), 0.1f, 10000) * -1f;
         else tmpspeed = Mathf.Clamp(Mathf.Abs(tmpspeed), 0.1f, 10000);
     
         if (SmoothMovement) {
-            Vector3 targetVelocity = new Vector3(Force.x * moveSpeed * tmpspeed, rb.linearVelocity.y, Force.y * moveSpeed * tmpspeed);
+            Vector3 targetVelocity = new();
+
+            if(noclip) targetVelocity = new Vector3(Force.x * moveSpeed * tmpspeed, vForce * moveSpeed * tmpspeed, Force.y * moveSpeed * tmpspeed);
+            else targetVelocity = new Vector3(Force.x * moveSpeed * tmpspeed, rb.linearVelocity.y, Force.y * moveSpeed * tmpspeed);
+            
             rb.linearVelocity = Vector3.SmoothDamp(rb.linearVelocity, targetVelocity, ref Velocity, MovementSmoothing);
         } else {
-            rb.AddForce(new Vector3(Force.x * moveSpeed * tmpspeed, 0f, Force.y * moveSpeed * tmpspeed));
+            rb.AddForce(new Vector3(Force.x * moveSpeed * tmpspeed, vForce * moveSpeed * tmpspeed, Force.y * moveSpeed * tmpspeed));
         }
     }
 
@@ -281,13 +318,16 @@ public class PlayerController : MonoBehaviour {
         StartCoroutine(Dashing());
     }
 
-    public void Damage(float damage, string type = "") {
-        if (type == "void" && fallDamage) return;
+    public void Damage(float damage, sys.damageTypes type = new(), MainMenace dealer = null) {
+        if (type == sys.damageTypes.Void && fallDamage) return;
 
         if (guarding)
             health -= (damage / (1 + (defence / 50)) / GuardModifier);
         else
             health -= damage / (1 + (defence / 50));
+
+        if (thorns && dealer != null)
+            dealer.Damage(damage / (1 + (defence / 50)));
 
         SpawnHitDisplay(-(damage / (1 + (defence / 50))));
 
@@ -352,5 +392,10 @@ public class PlayerController : MonoBehaviour {
     public IEnumerator Dashing(){
         yield return new WaitForSeconds(0.5f);
         dashing = false;
+    }
+
+    public IEnumerator GroundPounding(){
+        yield return new WaitForSeconds(0.5f);
+        canPound = true;
     }
 }

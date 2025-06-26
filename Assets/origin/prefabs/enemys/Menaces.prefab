@@ -67,3 +67,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemys: []
+  col: {fileID: 0}
+  activated: 0
+  Forceactivated: 0
+  endRoom: 0
+  count: -1
+  safeborder: 5

@@ -32,7 +32,7 @@ public class KillBox : MonoBehaviour {
                 float damage = player.health / 4;
                 damage = Mathf.Clamp(damage, player.maxHealth / 10, player.maxHealth);
 
-                player.Damage(damage, "void");
+                player.Damage(damage, sys.damageTypes.Void);
 
                 if (world.transform.childCount-1 >= player.room)
                     chosenOne.transform.position = world.transform.GetChild(player.room).position + new Vector3(0, 10, 0);
