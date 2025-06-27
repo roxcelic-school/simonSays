@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dmg: 2
+  playerref: {fileID: 2531207252269518093, guid: 6e3ef3f2fe3822d4b8ff5702f4971e9e, type: 3}
 --- !u!65 &-1931085418866669383
 BoxCollider:
   m_ObjectHideFlags: 0

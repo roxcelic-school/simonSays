@@ -24,7 +24,11 @@ public class silasController : PlayerController {
         spinning = true;
         base.speed *= 2;
         base.healModifier *= 3;
-        yield return new WaitForSeconds(0.5f);
+        base.attackComp.transform.localScale *= 1.5f;
+
+        yield return new WaitForSeconds(1.5f);
+        
+        base.attackComp.transform.localScale /= 1.5f;
         base.speed /= 2;
         base.healModifier /= 3;
         spinning = false;
@@ -34,5 +38,11 @@ public class silasController : PlayerController {
         base.increaseRoomIndex();
 
         base.Heal(maxHealth * silasroommodifier);
+    }
+
+    public override void Heal(float Heal, bool modified = false) {
+        base.Heal(Heal, modified);
+
+        base.PlayerSpecificMeter += Heal;
     }
 }

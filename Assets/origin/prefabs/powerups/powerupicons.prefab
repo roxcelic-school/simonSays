@@ -64,6 +64,11 @@ MonoBehaviour:
   - you learn to jump
   - silly
   - compass
+  - n
+  - thorns
+  - Scholarly Mind
+  - Fist and Steel
+  - TimeDevice
   iconIcons:
   - {fileID: 21300000, guid: c0cd9cef2d45bd246a0573b15d198e97, type: 3}
   - {fileID: 21300000, guid: 580670efabc54a34bbc8454cce96534b, type: 3}
@@ -84,3 +89,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1a831f614bfe021448cdb81834469b56, type: 3}
   - {fileID: 21300000, guid: 564a9f3fe8d9e784aab01aa7ebc20958, type: 3}
   - {fileID: 21300000, guid: 96af6aee46ebd194cb19ce4398fc5508, type: 3}
+  - {fileID: 21300000, guid: dbe46479d71561240aa9871ca48752dd, type: 3}
+  - {fileID: 21300000, guid: 4ae69681bb5852448b6b349b06e085c3, type: 3}
+  - {fileID: 21300000, guid: 65659b70294515347ac8a276a761b8dd, type: 3}
+  - {fileID: 21300000, guid: c3577ce7cc51239419f0920afc47d585, type: 3}
+  - {fileID: 21300000, guid: 4e8e350e0c25a5f44af0e4ffaa5780f9, type: 3}

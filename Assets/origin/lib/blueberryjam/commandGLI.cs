@@ -46,7 +46,6 @@ namespace commandGLI {
             
             // line changed for this instance
             GameObject DisplayCommand = GameObject.FindGameObjectsWithTag("commands")[0];
-            Debug.Log(DisplayCommand.name);
             
             if (DisplayCommand == null && DisplayCommand.GetComponent<TMP_Text>() == null){
                 Debug.Log(userInput);

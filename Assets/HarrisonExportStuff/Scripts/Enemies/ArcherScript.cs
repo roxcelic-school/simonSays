@@ -15,11 +15,6 @@ public class ArcherScript : enemyclass{
 
     protected override void Update()
     {
-        rb.MovePosition(transform.position + (transform.position - targetpos) * movspeed * Time.deltaTime);//moves enemy to that random point, and checks if it's still there? idk how to explain it.
-        if (transform.position == targetpos)
-        {
-            ismoving = false;
-        }
         base.Update();
     }
 
@@ -27,7 +22,6 @@ public class ArcherScript : enemyclass{
     {
         while (true)
         {
-            Relocate();
             RangedAttack();
             yield return new WaitForSeconds(2);
         }

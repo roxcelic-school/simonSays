@@ -21,7 +21,13 @@ public class powerUpDisplay : MonoBehaviour {
     public List<string> powerups;
 
     void Start() {
+        StartCoroutine(waitToDisplay());
+    }
+
+    public void PlayerDisplay() {
         powerups = PlayerPrefs.GetString("powerups").Split(",").ToList();
+
+        Debug.Log(PlayerPrefs.GetString("powerups"));
 
         while (powerups.Contains("")) powerups.Remove("");
 
@@ -31,10 +37,17 @@ public class powerUpDisplay : MonoBehaviour {
         foreach (GameObject item in Display) {
             if (powerups.Count -1 >= 0) {
                 if(iconsHold.icons().ContainsKey(powerups[0])) item.GetComponent<Image>().sprite = iconsHold.icons()[powerups[0]];
+                item.GetComponent<Image>().color = new Color(1, 1, 1, 1);
                 powerups = powerups.Skip(1).ToList();
             } else {
                 item.GetComponent<Image>().color = new Color(0, 0, 0, 0);
             }
         }
+    }
+
+    public IEnumerator waitToDisplay() {
+        yield return 0;
+
+        PlayerDisplay();
     }
 }

@@ -40,7 +40,7 @@ public class EnemySpawn : MonoBehaviour {
     }
 
     public IEnumerator SpawnCreatures() {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
 
         if (!GameObject.Find("Canvas").transform.Find("powerups").gameObject.activeSelf) foreach (GameObject bean in enemys){
             GameObject newBean = Instantiate(bean, new Vector3(0, 0, 0), Quaternion.identity);
@@ -60,7 +60,8 @@ public class EnemySpawn : MonoBehaviour {
     }
 
     void Update() {
-        if (!endRoom || PlayerPrefs.GetString("generated", "false") != "true") return;
+        if (!endRoom || PlayerPrefs.GetString("generated", "false") != "true") 
+            return;
 
         Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, transform.localScale.x / 2);
 

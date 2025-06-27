@@ -47,14 +47,14 @@ namespace sys {
                     "ground-pound", new eevee.config {
                         displayName = "ground-pound",
                         KEYBOARD_code = (int)KeyCode.LeftControl,
-                        CONTROLLER_name = "Left Stick Down"
+                        CONTROLLER_name = "Left Stick Press"
                     }
                 },
                 {
                     "jump", new eevee.config {
                         displayName = "jump",
                         KEYBOARD_code = (int)KeyCode.Space,
-                        CONTROLLER_name = "Left Stick Down"
+                        CONTROLLER_name = "A"
                     }
                 },
                 // attack
@@ -68,14 +68,14 @@ namespace sys {
                 {
                     "dash", new eevee.config {
                         displayName = "dash",
-                        KEYBOARD_code = (int)KeyCode.X,
-                        CONTROLLER_name = "Right Trigger"
+                        KEYBOARD_code = (int)KeyCode.LeftShift,
+                        CONTROLLER_name = "Left Trigger"
                     }
                 },
                 {
                     "attack", new eevee.config {
                         displayName = "attack",
-                        KEYBOARD_code = (int)KeyCode.C,
+                        KEYBOARD_code = (int)KeyCode.F,
                         CONTROLLER_name = "Right Trigger"
                     }
                 },
@@ -84,28 +84,28 @@ namespace sys {
                     "attack-L", new eevee.config {
                         displayName = "attack-L",
                         KEYBOARD_code = (int)KeyCode.LeftArrow,
-                        CONTROLLER_name = ""
+                        CONTROLLER_name = "Right Stick Left"
                     }
                 },
                 {
                     "attack-R", new eevee.config {
                         displayName = "attack-R",
                         KEYBOARD_code = (int)KeyCode.RightArrow,
-                        CONTROLLER_name = ""
+                        CONTROLLER_name = "Right Stick Right"
                     }
                 },
                 {
                     "attack-U", new eevee.config {
                         displayName = "attack-U",
                         KEYBOARD_code = (int)KeyCode.UpArrow,
-                        CONTROLLER_name = ""
+                        CONTROLLER_name = "Right Stick Up"
                     }
                 },
                 {
                     "attack-D", new eevee.config {
                         displayName = "attack-D",
                         KEYBOARD_code = (int)KeyCode.DownArrow,
-                        CONTROLLER_name = ""
+                        CONTROLLER_name = "Right Stick Down"
                     }
                 },
                 // special attack
@@ -113,7 +113,7 @@ namespace sys {
                     "special", new eevee.config {
                         displayName = "special",
                         KEYBOARD_code = (int)KeyCode.Return,
-                        CONTROLLER_name = ""
+                        CONTROLLER_name = "X"
                     }
                 },
                 {
@@ -127,43 +127,43 @@ namespace sys {
                 {
                     "MenuLeft", new eevee.config {
                         displayName = "MenuLeft",
-                        KEYBOARD_code = (int)KeyCode.LeftArrow,
+                        KEYBOARD_code = (int)KeyCode.A,
                         CONTROLLER_name = "Left Stick Left"
                     }
                 },
                 {
                     "MenuRight", new eevee.config {
                         displayName = "MenuRight",
-                        KEYBOARD_code = (int)KeyCode.RightArrow,
+                        KEYBOARD_code = (int)KeyCode.D,
                         CONTROLLER_name = "Left Stick Right"
                     }
                 },
                 {
                     "MenuUp", new eevee.config {
                         displayName = "MenuUp",
-                        KEYBOARD_code = (int)KeyCode.UpArrow,
+                        KEYBOARD_code = (int)KeyCode.W,
                         CONTROLLER_name = "Left Stick Up"
                     }
                 },
                 {
                     "MenuDown", new eevee.config {
                         displayName = "MenuDown",
-                        KEYBOARD_code = (int)KeyCode.DownArrow,
+                        KEYBOARD_code = (int)KeyCode.S,
                         CONTROLLER_name = "Left Stick Down"
                     }
                 },
                 {
                     "MenuSelect", new eevee.config {
                         displayName = "MenuSelect",
-                        KEYBOARD_code = (int)KeyCode.C,
+                        KEYBOARD_code = (int)KeyCode.F,
                         CONTROLLER_name = "A"
                     }
                 },
                 {
                     "MenuBack", new eevee.config {
                         displayName = "MenuBack",
-                        KEYBOARD_code = (int)KeyCode.X,
-                        CONTROLLER_name = "A"
+                        KEYBOARD_code = (int)KeyCode.E,
+                        CONTROLLER_name = "B"
                     }
                 },
                 // harrisons controls
@@ -214,42 +214,42 @@ namespace sys {
                     "commandBarOpen", new eevee.config {
                         displayName = "commandBarOpen",
                         KEYBOARD_code = (int)KeyCode.Q,
-                        CONTROLLER_name = "start"
+                        CONTROLLER_name = "Select"
                     }
                 },
                 {
                     "nextCommand", new eevee.config {
                         displayName = "nextCommand",
                         KEYBOARD_code = (int)KeyCode.UpArrow,
-                        CONTROLLER_name = "Left Stick Up"
+                        CONTROLLER_name = "Right Stick Up"
                     }
                 },
                 {
                     "lastCommand", new eevee.config {
                         displayName = "lastCommand",
                         KEYBOARD_code = (int)KeyCode.DownArrow,
-                        CONTROLLER_name = "Left Stick Down"
+                        CONTROLLER_name = "Right Stick Down"
                     }
                 }, // noclip controls
                 {
                     "noClipUp", new eevee.config {
                         displayName = "noClipUp",
                         KEYBOARD_code = (int)KeyCode.Space,
-                        CONTROLLER_name = ""
+                        CONTROLLER_name = "A"
                     }
                 },
                 {
                     "noClipDown", new eevee.config {
                         displayName = "noClipDown",
                         KEYBOARD_code = (int)KeyCode.LeftControl,
-                        CONTROLLER_name = ""
+                        CONTROLLER_name = "Left Stick Press"
                     }
                 },
                 {
                     "noClipSpeed", new eevee.config {
                         displayName = "noClipSpeed",
                         KEYBOARD_code = (int)KeyCode.LeftShift,
-                        CONTROLLER_name = ""
+                        CONTROLLER_name = "X"
                     }
                 }
             };

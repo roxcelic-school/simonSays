@@ -150,5 +150,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52999475018cad34dab96ad32c93a9c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parryeffect: {fileID: 0}
+  parryeffect: {fileID: 9081380162086792260, guid: c7ac69d554fb91d4a941dbf9d2635c7d, type: 3}
   dmg: 2

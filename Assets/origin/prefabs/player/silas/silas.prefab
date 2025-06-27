@@ -3598,8 +3598,8 @@ MonoBehaviour:
   baseAttackDamage: 0
   PlayerSpecificMeterMax: 100
   PlayerSpecificMeter: 100
-  PlayerSpecificMeterRecoveryRate: 5
-  PlayerSpecificMeterUseRate: 25
+  PlayerSpecificMeterRecoveryRate: 2.5
+  PlayerSpecificMeterUseRate: 50
   PlayerSpecificAttackDamage: 0
   guarding: 0
   room: 0

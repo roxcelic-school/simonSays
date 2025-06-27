@@ -2,6 +2,7 @@
 using UnityEngine;
 using eevee;
 using UnityEngine.UI;
+using System.Collections;
 using UnityEngine.SceneManagement;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerControllerH : MonoBehaviour
@@ -20,7 +21,7 @@ public class PlayerControllerH : MonoBehaviour
     protected float deftime = 0.5F;//time between cooldown
     protected float firerate = 1f;//time between firing
     protected float lastusedtime;
-    protected bool overdrivebool;//is overdriving?
+    public bool overdrivebool;//is overdriving?
 
 
     [Header("Components")]
@@ -67,6 +68,7 @@ public class PlayerControllerH : MonoBehaviour
         playerstate = PlayerState.Neutral;
         ChangeState();//setting player to neutral
         lastdash = Time.time;
+        StartCoroutine(healovertime());
 
         // powerups
         string[] powerupsHOLD = PlayerPrefs.GetString("powerups", "").Split(",");
@@ -92,7 +94,7 @@ public class PlayerControllerH : MonoBehaviour
     protected virtual void Update()
     {
 
-        if ((steam <= 10) && (playerstate == PlayerState.Neutral) && (overdrivebool == false))//normal status- if steam is less than ten, player is neutral and they aren't overdriving:
+        if ((steam <= 10) && (playerstate != PlayerState.Defending) && (overdrivebool == false))//normal status- if steam is less than ten, player is neutral and they aren't overdriving:
         {
             steam += Time.deltaTime;//gain steam 
             steambar.value = steam;
@@ -210,7 +212,6 @@ public class PlayerControllerH : MonoBehaviour
                 atkrotation = Quaternion.Euler(90, atkrotation.eulerAngles.y, 0);
                 Instantiate(hitboxref, swordpos, atkrotation);
                 lastusedtime = Time.time;//basic cooldown
-
             }
         }
         //ranged combat- similar to melee, costs steam to shoot, and shoots something that moves towards when the ray hit. I did this because I want to be able to shoot flying things in the air, in a 3D space
@@ -233,21 +234,26 @@ public class PlayerControllerH : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(Mousepoint, out hit, 100f))
             {
-                Vector3 raydirection = (hit.point - transform.position).normalized;
-                float angle = Mathf.Atan2(raydirection.y, raydirection.x) * Mathf.Rad2Deg;
-                atkrotation = Quaternion.LookRotation(raydirection, Vector3.up);
-                Vector3 swordpos = transform.position + raydirection * offsetval;
-                Instantiate(projectileref, swordpos, atkrotation);
-                lastusedtime = Time.time;//basic cooldown
+                if(hit.collider.gameObject.tag != "MainCamera"){
+                    Vector3 raydirection = (hit.point - transform.position).normalized;
+                    float angle = Mathf.Atan2(raydirection.y, raydirection.x) * Mathf.Rad2Deg;
+                    atkrotation = Quaternion.LookRotation(raydirection, Vector3.up);
+                    Vector3 swordpos = transform.position + raydirection * offsetval;
+                    Instantiate(projectileref, swordpos, atkrotation);
+                    lastusedtime = Time.time;//basic cooldown
+                }
+
+                
+                
             }
         }
-        else if (eevee.input.Check("HDash") && steam > 3f && (Time.time > lastdash + 0.5f))//dash, really simple, basic. lots of conditions
-        {
-            rb.AddForce(move * 1.5f, ForceMode.Impulse);//really basic and shit dash
-            steam -= 3f;
-            steambar.value = steam;
-            lastdash = Time.time;
-        }
+        // else if (eevee.input.Check("HDash") && steam > 3f && (Time.time > lastdash + 0.5f))//dash, really simple, basic. lots of conditions
+        // {
+        //     rb.MovePosition(move * 3);
+        //     steam -= 3f;
+        //     steambar.value = steam;
+        //     lastdash = Time.time;
+        // }
         else if (eevee.input.Check("HOverdrive"))//this is Overdrive, basically makes it so steam drains fast, but players move fast and shoot faster. im thinking of making it so they take more damage in this state. 
         {
             Debug.Log("Pressed E");
@@ -269,7 +275,7 @@ public class PlayerControllerH : MonoBehaviour
         // respawn
         if (transform.position.y <= -15f) {
             transform.position = new(0, 5f, 0);
-            playertookdamage(10);
+            playertookdamage(1);
         }
     }
     public void playertookdamage(int dmg)//reduces health by parameter
@@ -309,7 +315,7 @@ public class PlayerControllerH : MonoBehaviour
             stateimage.sprite = neutral;
         }
     }
-    public void RefuelSteam()//refuels steam. could use it whenever the player clears a room? thats what I used in my version
+    public void RoomRefuelSteam()//refuels steam. could use it whenever the player clears a room? thats what I used in my version
     {
         overdrivebool = false;
         if (steam < 7)
@@ -319,5 +325,24 @@ public class PlayerControllerH : MonoBehaviour
             playerstate = PlayerState.Neutral;
         }
 
+    }
+    public void EnemyRefuelSteam()//refuels steam. could use it whenever the player clears a room? thats what I used in my version
+    {
+        overdrivebool = false;
+        if (steam < 10)
+        {
+            steam += 0.25f;
+            steambar.value = steam;
+        }
+
+    }
+    private IEnumerator healovertime()
+    {
+        while (true)
+        {
+            playerhealth += 0.125f;
+            healthbar.value = playerhealth;
+            yield return new WaitForSeconds(0.25f);
+        }
     }
 }

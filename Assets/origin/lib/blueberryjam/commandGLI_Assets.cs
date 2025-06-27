@@ -261,6 +261,35 @@ namespace commandGLI_Assets {
                     }
                 }
             },
+            ["player"] = new commandGLI.command {
+                Description = "runs an effect upon the player",
+                Help = "use this to run an effect on the player",
+
+                action = (string input, string fullCommand) => {
+                    commandGLI.utils.Log("please enter an effect to add");
+                },
+
+                expand = new Dictionary<string, commandGLI.command>{
+                    ["damage"] = new commandGLI.command {
+                        Description = "deals damage to the player",
+                        Help = "deals damage to the player",
+                        Useage = "player.damage(damage)",
+
+                        action = (string input, string fullCommand) => {
+                            commandGLI.utils.GetPlayer().Damage(Int32.Parse(input));
+                        }
+                    },
+                    ["heath"] = new commandGLI.command {
+                        Description = "heals to the player",
+                        Help = "heals to the player",
+                        Useage = "player.heath(health)",
+
+                        action = (string input, string fullCommand) => {
+                            commandGLI.utils.GetPlayer().Heal(Int32.Parse(input));
+                        }
+                    }
+                }
+            },
             ["addpowerup"] = new commandGLI.command {
                 Description = "adds a power up to the player",
                 Help = "add a power up to the player",
@@ -268,7 +297,11 @@ namespace commandGLI_Assets {
 
                 action = (string input, string fullCommand) => {
                     PlayerPrefs.SetString("powerups", PlayerPrefs.GetString("powerups", "") + $",{input}");
-                    commandGLI.utils.Log($"if {input} is a possible power up it will take effect next floor");
+                    
+                    commandGLI.utils.GetPlayer().applyPowerup(input);
+                    commandGLI.utils.GetPlayer().StartCoroutine(commandGLI.utils.GetPlayer().transform.Find("Canvas--Dev/PowerUpUi").GetComponent<powerUpDisplay>().waitToDisplay());
+
+                    commandGLI.utils.Log($"applied powerup");
                 }
             },
             ["removeallpowerups"] = new commandGLI.command {

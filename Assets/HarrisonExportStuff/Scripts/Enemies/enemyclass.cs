@@ -65,6 +65,7 @@ public class enemyclass : MonoBehaviour
     public void takedamage(int dmg, string damager)
     {
         Instantiate(blood, transform.position, Quaternion.identity);
+        playerref.GetComponent<PlayerControllerH>().EnemyRefuelSteam();
         enmhealth -= dmg;
         healthbar.value = enmhealth;
         if (enmhealth <= 0)

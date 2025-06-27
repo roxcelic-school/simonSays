@@ -24,8 +24,10 @@ public class ProjectileScript : MonoBehaviour
     {
         if (colobj.gameObject.tag != "Effects")//to make sure it doesn't delete itself when it hits the parry effect on the way back from being parried if that makes sense
         {
+            //Debug.Log("hihihiih hit a something");
             if (colobj.gameObject.tag == "Player" && (Time.time > lastparried + 1f))
             {
+                //Debug.Log("hihihiih hit a player");
                 if (colobj.gameObject.GetComponent<PlayerControllerH>() != null)
                 {
                     if (colobj.gameObject.GetComponent<PlayerControllerH>().playerstate == PlayerControllerH.PlayerState.Defending)
@@ -42,11 +44,10 @@ public class ProjectileScript : MonoBehaviour
                         colobj.gameObject.GetComponent<PlayerControllerH>().playertookdamage(dmg);
                         lastparried = Time.time;
                         Destroy(gameObject);
-
                     }
                 }
             }
-            else if (colobj.gameObject.tag == "Enemy" && (Time.time > lastparried + 1f))
+            else if (colobj.gameObject.tag == "Enemy" && (Time.time > lastparried + 0.25f))
             {
                 if (colobj.gameObject.GetComponent<enemyclass>() != null)
                 {
@@ -55,8 +56,11 @@ public class ProjectileScript : MonoBehaviour
                 }
 
             }
-
         }
+        // else
+        // {
+        //     Destroy(gameObject);
+        // }
     }
 }
 

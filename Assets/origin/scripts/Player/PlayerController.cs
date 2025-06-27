@@ -131,17 +131,7 @@ public class PlayerController : MonoBehaviour {
         foreach (string key in powerups.full.truePowerups().Keys) Debug.Log(key);
         
         foreach (string powerup in powerupsHOLD) {
-            Debug.Log(powerup);
-
-            if (powerup != ""){
-                act.Add(powerup);
-                
-                if (powerups.full.truePowerups().ContainsKey(powerup)) {
-                    Debug.Log($"applying {powerup}");
-                    powerups.full.truePowerups()[powerup].action(this);
-                    Debug.Log($"applied {powerup}");
-                }
-            }
+            applyPowerup(powerup);
         }
     }
 
@@ -239,16 +229,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     bool isTouchingFloor() {
-        Collider[] hitColliders = Physics.OverlapSphere(gameObject.transform.position, transform.localScale.x / 4);
-
-        foreach (Collider collider in hitColliders){
-            GameObject gameObject = collider.gameObject;
-            Debug.Log(gameObject);
-            if (gameObject.tag == "floor")
-                return true;
-        }
-
-        return false;
+        float _distanceToTheGround = GetComponent<Collider>().bounds.extents.y;
+        return Physics.Raycast(transform.position, Vector3.down, _distanceToTheGround + 0.1f);
     }
 
     void ApplyMovement() {
@@ -257,15 +239,14 @@ public class PlayerController : MonoBehaviour {
 
 
         if (noclip) vForce = eevee.input.CheckAxis("noClipUp", "noClipDown");
-        if (eevee.input.Check("noClipSpeed") && noclip) vForce *= 2;
 
-        if(tmpspeed <= 0) tmpspeed = Mathf.Clamp(Mathf.Abs(tmpspeed), 0.1f, 10000) * -1f;
-        else tmpspeed = Mathf.Clamp(Mathf.Abs(tmpspeed), 0.1f, 10000);
+        if(tmpspeed <= 0) tmpspeed = Mathf.Clamp(Mathf.Abs(tmpspeed), 2f, 10000f) * -1f;
+        else tmpspeed = Mathf.Clamp(Mathf.Abs(tmpspeed), 2f, 10000f);
     
         if (SmoothMovement) {
             Vector3 targetVelocity = new();
 
-            if(noclip) targetVelocity = new Vector3(Force.x * moveSpeed * tmpspeed, vForce * moveSpeed * tmpspeed, Force.y * moveSpeed * tmpspeed);
+            if(noclip) targetVelocity = new Vector3(Force.x * moveSpeed * tmpspeed, vForce * moveSpeed * tmpspeed * (eevee.input.Check("noClipSpeed") ? 2 : 1), Force.y * moveSpeed * tmpspeed);
             else targetVelocity = new Vector3(Force.x * moveSpeed * tmpspeed, rb.linearVelocity.y, Force.y * moveSpeed * tmpspeed);
             
             rb.linearVelocity = Vector3.SmoothDamp(rb.linearVelocity, targetVelocity, ref Velocity, MovementSmoothing);
@@ -302,6 +283,8 @@ public class PlayerController : MonoBehaviour {
 
     public void Die() {
         if (!dead) {
+            transform.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+            transform.Find("Health").gameObject.SetActive(false);
             GameObject loadingScreen = GameObject.Find("Canvas").transform.Find("deathScreen").gameObject;
             loadingScreen.SetActive(true);
             loadingScreen.GetComponent<Animator>().Play("deathscreenfadein");
@@ -319,7 +302,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void Damage(float damage, sys.damageTypes type = new(), MainMenace dealer = null) {
-        if (type == sys.damageTypes.Void && fallDamage) return;
+        if ((type == sys.damageTypes.Void && fallDamage) || dead) return;
 
         if (guarding)
             health -= (damage / (1 + (defence / 50)) / GuardModifier);
@@ -336,6 +319,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     public virtual void Heal(float Heal, bool modified = false) {
+        if (dead) return;
+
         if (modified) health += Heal;
         else health += Heal * healModifier;
 
@@ -354,6 +339,15 @@ public class PlayerController : MonoBehaviour {
 
         tmpHitDisplay.GetComponent<Rigidbody>().linearVelocity = rb.linearVelocity;
         tmpHitDisplay.GetComponent<hitDisplay>().damage = damage;
+    }
+
+    public void applyPowerup(string powerup) {
+        if (powerup != ""){
+            act.Add(powerup);
+            if (powerups.full.truePowerups().ContainsKey(powerup)) {
+                powerups.full.truePowerups()[powerup].action(this);
+            }
+        }
     }
 
     public void SpawnPointer(GameObject Target) {

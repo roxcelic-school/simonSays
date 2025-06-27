@@ -86,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7361702552622773082, guid: d390523a14cb4974dbd0a578d67628f5, type: 3}
       propertyPath: m_IsKinematic
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -2510399290570195502, guid: d390523a14cb4974dbd0a578d67628f5, type: 3}
@@ -95,14 +95,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2216240969496738550, guid: d390523a14cb4974dbd0a578d67628f5, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -8186382039673991231}
+      addedObject: {fileID: 1040126243797513285}
   m_SourcePrefab: {fileID: 100100000, guid: d390523a14cb4974dbd0a578d67628f5, type: 3}
 --- !u!1 &5752728410343452225 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2216240969496738550, guid: d390523a14cb4974dbd0a578d67628f5, type: 3}
   m_PrefabInstance: {fileID: 5842408321039242423}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-8186382039673991231
+--- !u!114 &1040126243797513285
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,10 +111,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5752728410343452225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52999475018cad34dab96ad32c93a9c1, type: 3}
+  m_Script: {fileID: 11500000, guid: ced3bbbeaeef96645bbbc50832e40d2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movspeed: 20
-  parry: 1
   parryeffect: {fileID: 9081380162086792260, guid: c7ac69d554fb91d4a941dbf9d2635c7d, type: 3}
-  dmg: 2
+  dmg: 1
